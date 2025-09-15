@@ -159,35 +159,6 @@ npm start
 
 ---
 
-## 📁 Project Structure
-
-\`\`\`
-YardStick-NotesApp/
-├── 🗄️ backend/
-│   ├── middleware/       # Auth and role-checking middleware
-│   ├── routes/           # API route definitions
-│   ├── .env              # Secret keys and database URL
-│   ├── db-setup.js       # Script to create database tables
-│   ├── db.js             # Central PostgreSQL connection pool
-│   ├── index.js          # Main Express server entry point
-│   ├── package.json      # Backend dependencies
-│   ├── seed.js           # Script to populate DB with test data
-│   └── vercel.json       # Vercel deployment configuration
-│
-└── 🎨 frontend/
-    ├── src/
-    │   ├── components/   # Reusable React components (Modals, Toast, etc.)
-    │   ├── context/      # AuthContext for global state management
-    │   ├── hooks/        # Custom hooks (e.g., useToast)
-    │   ├── pages/        # Top-level page components (Login, Dashboard)
-    │   ├── App.js        # Main component with routing logic
-    │   └── index.js      # Frontend entry point
-    ├── package.json      # Frontend dependencies
-    └── tailwind.config.js # Tailwind CSS configuration
-\`\`\`
-
----
-
 ## 👥 Test Accounts
 
 The following test accounts are pre-seeded into the database. The password for all accounts is **`password`**.
