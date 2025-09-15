@@ -1,107 +1,130 @@
+# YardStick-NotesApp SaaS 📝
 
-Show thinking
-Of course. A good README.md is the most important document for any project. Here is a detailed and well-structured README.md file for you.
+<div align="center">
 
-Instructions
-In the root folder of your project (saas-notes-app), create a file named README.md.
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 
-Copy the entire content below and paste it into that new file.
+**A full-stack, multi-tenant SaaS Notes Application built with a modern JavaScript stack and deployed on Vercel.**
 
-Replace the placeholder links like [YOUR_FRONTEND_URL] with your actual Vercel deployment URLs.
+[Live Demo](#-live-demo) • [Features](#-core-features) • [Tech Stack](#-technology-stack) • [Setup](#-local-development-setup) • [API Docs](#-api-documentation)
 
-Commit and push this final file to GitHub.
+</div>
 
-▼▼▼ Copy Everything Below This Line ▼▼▼
-YardStick-NotesApp: A Multi-Tenant SaaS Application
-This is a full-stack, multi-tenant SaaS (Software as a Service) Notes Application. It allows different companies (tenants) to sign up, manage their users, and create, edit, and delete notes within their own secure, isolated environment.
+---
 
-The project is built with a modern technology stack and deployed on Vercel.
+## 📋 Table of Contents
 
-## Live Demo
-Frontend Application: [YOUR_FRONTEND_URL]
+- [🚀 Live Demo](https://yard-stick-notes-app-lf64.vercel.app/login)
 
-Backend Health Status: [YOUR_BACKEND_URL]/health
 
-## Core Features
-Multi-Tenancy Architecture: Securely supports multiple companies with strict data isolation.
+---
 
-User Authentication: JWT-based login and signup system.
+## 🚀 Live Demo
 
-Role-Based Access Control (RBAC):
+<div align="center">
 
-Admin: Can invite new users and manage the company's subscription.
+| Service | URL |
+|---------|-----|
+| **Frontend Application** | **`[YOUR_FRONTEND_URL]`** |
+| **Backend Health Status** | **`[YOUR_BACKEND_URL]/health`** |
 
-Member: Can only manage notes.
+</div>
 
-Subscription Gating: A "Free" plan limited to 3 notes and a "Pro" plan with unlimited notes.
+---
 
-Notes Management (CRUD): Full functionality to create, read, update, and delete notes.
+## ✨ Core Features
 
-User Invites: Admins can invite new members to join their tenant.
+<div align="center">
 
-## Technology Stack
-### Backend
-Runtime: Node.js
+| Feature | Description |
+|---------|-------------|
+| 🏢 **Multi-Tenancy Architecture** | Securely supports multiple companies with strict data isolation |
+| 🔐 **User Authentication** | JWT-based login and signup system for new tenants |
+| 👥 **Role-Based Access Control** | Admin and Member roles with different permissions |
+| 💳 **Subscription Gating** | Free plan (3 notes) and Pro plan (unlimited notes) |
+| 📝 **Full CRUD Functionality** | Create, Read, Update, and Delete notes |
+| 📧 **User Invites** | Admins can invite new members to join their tenant |
 
-Framework: Express.js
+</div>
 
-Database: PostgreSQL (hosted on Neon)
+### 🔑 Role Permissions
 
-Database Client: node-postgres (pg)
+- **👑 Admin**: Can invite new users and upgrade the subscription
+- **👤 Member**: Can only manage notes
 
-Authentication: JSON Web Tokens (JWT)
+---
 
-Validation: Zod
+## 🛠️ Technology Stack
 
-### Frontend
-Library: React.js
+<div align="center">
 
-Framework: Create React App
+| **Frontend** | **Backend** | **Deployment & Database** |
+|--------------|-------------|---------------------------|
+| React.js | Node.js | Vercel |
+| React Router | Express.js | PostgreSQL (on Neon) |
+| Tailwind CSS | `node-postgres` (pg) | Git & GitHub |
+| Axios | JWT (jsonwebtoken) | |
+| React Context API | Zod (for validation) | |
 
-Styling: Tailwind CSS
+</div>
 
-State Management: React Context API
+---
 
-API Communication: Axios
+## 🏛️ Architectural Decisions
 
-Routing: React Router
+### 🏢 Multi-Tenancy Strategy
 
-### Deployment
-Platform: Vercel (for both frontend and backend)
+> **Approach**: This application uses a **shared schema with a `tenant_id` column** for multi-tenancy.
 
-Version Control: Git & GitHub
+**💡 Reasoning**: This model was chosen for its simplicity, cost-effectiveness, and ease of development. It's a robust and common pattern for SaaS applications where tenants have similar data schemas.
 
-## Architectural Decisions
-### Multi-Tenancy Strategy
-This application uses a shared schema with a tenant_id column approach for multi-tenancy.
+**🔧 Implementation**: Every table holding tenant-specific data (e.g., `users`, `notes`) has a mandatory `tenant_id` foreign key. All backend API queries are programmatically filtered by the `tenant_id` of the authenticated user, which is extracted from their JWT on every request. This ensures that a user from one company can **never** access data belonging to another.
 
-Reasoning: This model was chosen for its simplicity, cost-effectiveness, and ease of development and maintenance, making it a robust and common pattern for many SaaS applications.
+---
 
-Implementation: Every table in the database that holds tenant-specific data (e.g., users, notes) has a mandatory tenant_id foreign key column. Every single backend API query that accesses this data is programmatically filtered by the tenant_id of the currently authenticated user. This ID is extracted from their JWT on every request, ensuring that a user from one tenant can never access data belonging to another.
+## 📡 API Documentation
 
-## Local Development Setup
-To run this project on your local machine, follow these steps.
+<div align="center">
 
-### Prerequisites
-Node.js (v18 or later)
+| Method | Endpoint | Description | 🔒 Protected | 👑 Admin Only |
+|--------|----------|-------------|-------------|---------------|
+| `GET` | `/health` | Checks the health status of the API | ❌ | ❌ |
+| `POST` | `/auth/login` | Authenticates a user and returns a JWT | ❌ | ❌ |
+| `POST` | `/users/signup` | Registers a new user and a new tenant | ❌ | ❌ |
+| `POST` | `/users/invite` | Invites a new user to the admin's tenant | ✅ | ✅ |
+| `GET` | `/notes` | Fetches all notes for the current tenant | ✅ | ❌ |
+| `POST` | `/notes` | Creates a new note for the current tenant | ✅ | ❌ |
+| `PUT` | `/notes/:id` | Updates a specific note | ✅ | ❌ |
+| `DELETE` | `/notes/:id` | Deletes a specific note | ✅ | ❌ |
+| `POST` | `/tenants/:slug/upgrade` | Upgrades a tenant's plan to "Pro" | ✅ | ✅ |
 
-npm
+</div>
 
-Git
+---
 
-A free PostgreSQL database (e.g., from Neon)
+## 💻 Local Development Setup
 
-### Installation & Setup
-Clone the repository:
+### 📋 Prerequisites
 
-Bash
+- Node.js (v18 or later)
+- npm
+- Git
+- A free PostgreSQL database URL (e.g., from [Neon](https://neon.tech/))
 
+### 🚀 Installation
+
+#### 1️⃣ **Clone the Repository**
+\`\`\`bash
 git clone https://github.com/Gyaan507/YardStick-NotesApp.git
 cd YardStick-NotesApp
-Setup the Backend:
+\`\`\`
 
-Bash
-
+#### 2️⃣ **Setup the Backend**
+\`\`\`bash
 # Navigate to the backend folder
 cd backend
 
@@ -110,21 +133,20 @@ npm install
 
 # Create a .env file and add your variables
 # DATABASE_URL="your_postgresql_connection_string"
-# JWT_SECRET="your_super_secret_string"
+# JWT_SECRET="your_super_secret_and_long_string"
 
-# Run the database setup and seed scripts
+# Create DB tables and seed with test data
 node db-setup.js
 node seed.js
 
 # Start the backend server
 node index.js
-The backend will be running at http://localhost:3001.
+\`\`\`
+*Backend will run on `http://localhost:3001`*
 
-Setup the Frontend:
-
-Bash
-
-# Open a new terminal and navigate to the frontend folder
+#### 3️⃣ **Setup the Frontend** *(in a new terminal)*
+\`\`\`bash
+# Navigate to the frontend folder
 cd frontend
 
 # Install dependencies
@@ -132,43 +154,61 @@ npm install
 
 # Start the React development server
 npm start
-The frontend will open and run at http://localhost:3000.
+\`\`\`
+*Frontend will run on `http://localhost:3000`*
 
-## Project Structure
-The project is organized as a monorepo with two main folders: backend and frontend.
+---
 
-/
-├── backend/
-│   ├── middleware/       # Contains auth and role-checking middleware
-│   ├── routes/           # Defines all API routes (auth, users, notes, etc.)
-│   ├── .env              # Stores secret keys and database URL
+## 📁 Project Structure
+
+\`\`\`
+YardStick-NotesApp/
+├── 🗄️ backend/
+│   ├── middleware/       # Auth and role-checking middleware
+│   ├── routes/           # API route definitions
+│   ├── .env              # Secret keys and database URL
 │   ├── db-setup.js       # Script to create database tables
 │   ├── db.js             # Central PostgreSQL connection pool
 │   ├── index.js          # Main Express server entry point
 │   ├── package.json      # Backend dependencies
-│   ├── seed.js           # Script to populate the DB with test data
-│   └── vercel.json         # Vercel deployment configuration
+│   ├── seed.js           # Script to populate DB with test data
+│   └── vercel.json       # Vercel deployment configuration
 │
-└── frontend/
-    ├── public/           # Static assets and index.html
+└── 🎨 frontend/
     ├── src/
     │   ├── components/   # Reusable React components (Modals, Toast, etc.)
     │   ├── context/      # AuthContext for global state management
     │   ├── hooks/        # Custom hooks (e.g., useToast)
-    │   ├── pages/        # Top-level page components (Login, Dashboard, etc.)
+    │   ├── pages/        # Top-level page components (Login, Dashboard)
     │   ├── App.js        # Main component with routing logic
-    │   ├── index.js      # Frontend entry point
-    │   └── ...
-    ├── .env              # (Optional) Frontend environment variables
-    ├── package.json      # Frontend dependencies (React, Tailwind, etc.)
+    │   └── index.js      # Frontend entry point
+    ├── package.json      # Frontend dependencies
     └── tailwind.config.js # Tailwind CSS configuration
-## Test Accounts
-The following test accounts are pre-seeded into the database. The password for all accounts is password.
+\`\`\`
 
-admin@acme.test (Role: Admin, Tenant: Acme Inc.)
+---
 
-user@acme.test (Role: Member, Tenant: Acme Inc.)
+## 👥 Test Accounts
 
-admin@globex.test (Role: Admin, Tenant: Globex Corporation)
+The following test accounts are pre-seeded into the database. The password for all accounts is **`password`**.
 
-user@globex.test (Role: Member, Tenant: Globex Corporation)
+<div align="center">
+
+| 📧 Email | 👤 Role | 🏢 Tenant |
+|----------|---------|-----------|
+| `admin@acme.test` | **👑 Admin** | Acme Inc. |
+| `user@acme.test` | 👤 Member | Acme Inc. |
+| `admin@globex.test` | **👑 Admin** | Globex Corporation |
+| `user@globex.test` | 👤 Member | Globex Corporation |
+
+</div>
+
+---
+
+<div align="center">
+
+**Built with ❤️ by [Gyaan507](https://www.linkedin.com/in/gyaneshwar-kumar-8b6250228/)**
+
+⭐ **Star this repo if you found it helpful!** ⭐
+
+</div>
