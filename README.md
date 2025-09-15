@@ -22,18 +22,6 @@
 
 ---
 
-## 🚀 Live Demo
-
-<div align="center">
-
-| Service | URL |
-|---------|-----|
-| **Frontend Application** | **`[YOUR_FRONTEND_URL]`** |
-| **Backend Health Status** | **`[YOUR_BACKEND_URL]/health`** |
-
-</div>
-
----
 
 ## ✨ Core Features
 
