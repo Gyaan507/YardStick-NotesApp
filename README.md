@@ -10,7 +10,6 @@
 
 **A full-stack, multi-tenant SaaS Notes Application built with a modern JavaScript stack and deployed on Vercel.**
 
-[Live Demo](#-live-demo) • [Features](#-core-features) • [Tech Stack](#-technology-stack) • [Setup](#-local-development-setup) • [API Docs](#-api-documentation)
 
 </div>
 
